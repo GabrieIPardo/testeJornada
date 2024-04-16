@@ -1,11 +1,11 @@
-import utils from "./utils";
-import RNA from "./RNA";
-import controls from "./controls";
+import utils from "./utils.js";
+import RNA from "./RNA.js";
+import controls from "./controls.js";
 
 const SAMPLES = 20;
 const game = Runner.instance_;
 let dinoList = [];
-let dinaIndex = 0;
+let dinoIndex = 0;
 
 let bestScore = 0;
 let bestRNA = null;
@@ -19,21 +19,21 @@ function fillDinoList () {
     console.log('Lista de dinossauros criada!');
 }
 
-serTimeout(() => {
-    fillDinoList()
-    controls.dispatch('jump')
-}, 1000)
+setTimeout(() => {
+    fillDinoList();
+    controls.dispatch('jump');
+}, 1000);
 
 setInterval(() => {
-    if(!game.activated) return
+    if(!game.activated) return;
 
     const dino = dinoList[dinoIndex];
 
     if(game.crashed) {
         if(dino.score > bestScore) {
-            bestScore = dino.score
-            bestRNA = dino.save()
-            console.log('Melhor pontuação', bestScore)
+            bestScore = dino.score;
+            bestRNA = dino.save;
+            console.log('Melhor pontuação', bestScore);
         }
         dinoIndex++
 
@@ -69,10 +69,10 @@ setInterval(() => {
         const height = Math.tanh(105 - obstacle.y); 
 
         const [jump, crounch] = dino.compute([
-        distance,
-        speed,
-        height,
-        ]);
+            distance,
+            speed,
+            height,
+          ]);
 
         if (jump === crounch) return; 
         if (jump) controls.dispatch('jump'); // Se for verdadeira O dinossaro pula
